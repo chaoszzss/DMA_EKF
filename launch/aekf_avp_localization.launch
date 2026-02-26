@@ -1,0 +1,23 @@
+<launch>
+  <include file="$(find avp_localization)/launch/avp_localization.launch">
+    <arg name="use_compressed_input" value="false" />
+    <arg name="ipm_topic" value="/ipm_label" />
+    <arg name="filter_mode" value="aekf" />
+
+    <arg name="keyframe_distance_thresh" value="0.35" />
+    <arg name="keyframe_yaw_thresh_deg" value="3.0" />
+    <arg name="keyframe_time_thresh" value="0.25" />
+
+    <arg name="enable_scarcity_weighting" value="true" />
+    <arg name="enable_multi_primitive_residual" value="false" />
+    <arg name="enable_icp_quality_gate" value="true" />
+    <arg name="enable_distance_field_registration" value="true" />
+
+    <arg name="enable_observation_consistency_gate" value="true" />
+    <arg name="observation_max_translation_residual" value="0.25" />
+    <arg name="observation_max_yaw_residual_deg" value="6.0" />
+    <arg name="observation_hard_translation_reject" value="0.55" />
+    <arg name="observation_hard_yaw_reject_deg" value="15.0" />
+
+  </include>
+</launch>

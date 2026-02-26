@@ -1,0 +1,79 @@
+<launch>
+    <arg name="use_compressed_input" default="false" />
+    <arg name="ipm_topic" default="/ipm_label" />
+    <arg name="filter_mode" default="ekf" />
+    <arg name="launch_rviz" default="true" />
+    <arg name="primitive_weight_mode" default="scarcity" />
+    <arg name="gps_tum_path" default="" />
+    <arg name="estimation_tum_path" default="" />
+    <arg name="diagnostics_csv_path" default="" />
+    <arg name="keyframe_distance_thresh" default="0.6" />
+    <arg name="keyframe_yaw_thresh_deg" default="3.0" />
+    <arg name="keyframe_time_thresh" default="0.25" />
+
+    <!-- Shared front-end switches (recommended: keep enabled for all baselines and ours) -->
+    <arg name="enable_scarcity_weighting" default="true" />
+    <arg name="enable_multi_primitive_residual" default="true" />
+    <arg name="enable_icp_quality_gate" default="true" />
+    <arg name="enable_distance_field_registration" default="false" />
+    <arg name="enable_observation_consistency_gate" default="true" />
+    <arg name="observation_max_translation_residual" default="0.30" />
+    <arg name="observation_max_yaw_residual_deg" default="8.0" />
+    <arg name="observation_hard_translation_reject" default="0.60" />
+    <arg name="observation_hard_yaw_reject_deg" default="18.0" />
+
+    <!-- DMA-only switches (ignored automatically when filter_mode != dmaekf) -->
+    <arg name="enable_dma_strong_tracking" default="true" />
+    <arg name="enable_dma_observation_weighting" default="true" />
+    <arg name="enable_iterative_refinement" default="true" />
+    <arg name="iterative_yaw_rate_thresh" default="0.45" />
+    <arg name="dma_ewma_rho" default="0.95" />
+    <arg name="dma_phi_max" default="12.0" />
+    <arg name="dma_gamma_max" default="6.0" />
+    <arg name="dma_quality_alpha" default="0.2" />
+    <arg name="dma_innovation_alpha" default="0.8" />
+    <arg name="dma_quality_trigger" default="0.35" />
+    <arg name="dma_innovation_trigger" default="1.10" />
+
+    <group if="$(arg launch_rviz)">
+        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find DMA_EKF)/launch/DMA_EKF.rviz" />
+    </group>
+
+    <node name="DMA_EKF" pkg="DMA_EKF" type="DMA_EKF" output="screen">
+        <param name="auto_run" type="bool" value="false" />
+        <param name="show_img" type="bool" value="false" />
+        <param name="use_compressed_input" type="bool" value="$(arg use_compressed_input)" />
+        <param name="ipm_topic" value="$(arg ipm_topic)" />
+        <param name="filter_mode" value="$(arg filter_mode)" />
+        <param name="gps_tum_path" value="$(arg gps_tum_path)" />
+        <param name="estimation_tum_path" value="$(arg estimation_tum_path)" />
+        <param name="diagnostics_csv_path" value="$(arg diagnostics_csv_path)" />
+        <param name="keyframe_distance_thresh" value="$(arg keyframe_distance_thresh)" />
+        <param name="keyframe_yaw_thresh_deg" value="$(arg keyframe_yaw_thresh_deg)" />
+        <param name="keyframe_time_thresh" value="$(arg keyframe_time_thresh)" />
+
+        <param name="enable_scarcity_weighting" value="$(arg enable_scarcity_weighting)" />
+        <param name="primitive_weight_mode" value="$(arg primitive_weight_mode)" />
+        <param name="enable_multi_primitive_residual" value="$(arg enable_multi_primitive_residual)" />
+        <param name="enable_icp_quality_gate" value="$(arg enable_icp_quality_gate)" />
+        <param name="enable_distance_field_registration" value="$(arg enable_distance_field_registration)" />
+        <param name="enable_observation_consistency_gate" value="$(arg enable_observation_consistency_gate)" />
+        <param name="observation_max_translation_residual" value="$(arg observation_max_translation_residual)" />
+        <param name="observation_max_yaw_residual_deg" value="$(arg observation_max_yaw_residual_deg)" />
+        <param name="observation_hard_translation_reject" value="$(arg observation_hard_translation_reject)" />
+        <param name="observation_hard_yaw_reject_deg" value="$(arg observation_hard_yaw_reject_deg)" />
+
+        <param name="enable_dma_strong_tracking" value="$(arg enable_dma_strong_tracking)" />
+        <param name="enable_dma_observation_weighting" value="$(arg enable_dma_observation_weighting)" />
+        <param name="enable_iterative_refinement" value="$(arg enable_iterative_refinement)" />
+        <param name="iterative_yaw_rate_thresh" value="$(arg iterative_yaw_rate_thresh)" />
+        <param name="dma_ewma_rho" value="$(arg dma_ewma_rho)" />
+        <param name="dma_phi_max" value="$(arg dma_phi_max)" />
+        <param name="dma_gamma_max" value="$(arg dma_gamma_max)" />
+        <param name="dma_quality_alpha" value="$(arg dma_quality_alpha)" />
+        <param name="dma_innovation_alpha" value="$(arg dma_innovation_alpha)" />
+        <param name="dma_quality_trigger" value="$(arg dma_quality_trigger)" />
+        <param name="dma_innovation_trigger" value="$(arg dma_innovation_trigger)" />
+    </node>
+
+</launch>
