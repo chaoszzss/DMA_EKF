@@ -28,12 +28,12 @@ include_directories(
 
 catkin_package()
 
-add_library(lib_map SHARED
+add_library(lib_ekf SHARED
     src/SystemPrimitives.cpp
     src/LocalizationEngine.cpp
     src/RosVisualizationBridge.cpp
 )
-target_link_libraries(lib_map ${OpenCV_LIBS})
+target_link_libraries(lib_ekf ${OpenCV_LIBS})
 
 add_executable(DMA_EKF
         src/RosNodeMain.cpp
